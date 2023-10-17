@@ -1,5 +1,6 @@
 package com.example.bookshop.controllers;
 
+import com.example.bookshop.exception.BookAlreadyExistsException;
 import com.example.bookshop.models.Author;
 import com.example.bookshop.models.Book;
 import com.example.bookshop.repositories.BookRepository;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -52,14 +52,17 @@ public class BookController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<?> createBook(@RequestBody Book book) throws IOException {
+    public ResponseEntity<?> createBook(@RequestBody Book book) {
         try {
             Book createdBook = bookService.saveBook(book);
             return ResponseEntity.ok(createdBook);
-        } catch (Exception e) {
-            throw e;
+        } catch (BookAlreadyExistsException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Книга с таким порядковым номером уже существует.");
         }
     }
+
+
+
     @PutMapping(value = "/update/book/{bookId}")
     public ResponseEntity<Book> updateBook(@PathVariable Long bookId, Book updatedBook) {
         Book updated = bookService.updateBook(bookId, updatedBook);
@@ -71,14 +74,9 @@ public class BookController {
     }
 
     @DeleteMapping(value = "/delete/{bookId}")
-    public String deleteBook(@PathVariable Long bookId) {
-        Book book = bookService.findBookById(bookId);
-        if (book != null) {
-            bookService.deleteBook(bookId);
-            return "Книга успешно удалена!";
-        } else {
-            return "Книга не найдена :(";
-        }
+    public ResponseEntity deleteBook(@PathVariable Long bookId) {
+        bookService.deleteBook(bookId);
+        return ResponseEntity.ok().body("Книга с ID: "+bookId+" успешно удалена.");
     }
 
 }
