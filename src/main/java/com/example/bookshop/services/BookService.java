@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +57,10 @@ public class BookService {
         } else {
             return null;
         }
+    }
+
+    public List<Book> getBooksByName(String bookName) {
+        return bookRepository.findByBookNameContainingIgnoreCase(bookName);
     }
 
 }
