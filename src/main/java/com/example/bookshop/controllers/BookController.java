@@ -63,13 +63,13 @@ public class BookController {
 
 
 
-    @PutMapping(value = "/update/book/{bookId}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long bookId, Book updatedBook) {
+    @PutMapping(value = "/update/{bookId}")
+    public ResponseEntity<?> updateBook(@PathVariable Long bookId, Book updatedBook) {
         Book updated = bookService.updateBook(bookId, updatedBook);
         if (updated != null) {
             return ResponseEntity.ok(updated);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Книги с ID: " + bookId + " не существует");
         }
     }
 
