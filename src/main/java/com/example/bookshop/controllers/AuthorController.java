@@ -3,35 +3,33 @@ package com.example.bookshop.controllers;
 import com.example.bookshop.models.Author;
 import com.example.bookshop.repositories.AuthorRepository;
 import com.example.bookshop.services.AuthorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
+@RequestMapping("api/authors")
+@RequiredArgsConstructor
 public class AuthorController {
     private final AuthorRepository authorRepository;
-    private AuthorService authorService;
 
     @Autowired
-    public AuthorController(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
+    private AuthorService authorService;
+
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Author>> allAuthors() {
+        List<Author> authors = authorService.getAllAuthors();
+        return ResponseEntity.ok(authors);
     }
 
-
-    @GetMapping("/user/all")
-    public List<Author> allAuthors() {
-        return authorRepository.findAll();
-    }
-
-    @PostMapping("/api/authors")
+    @PostMapping(value = "/create")
     public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
         Author createdAuthor = authorService.createAuthor(author);
-        return new ResponseEntity<>(createdAuthor, HttpStatus.CREATED);
+        return ResponseEntity.ok(createdAuthor);
     }
 }

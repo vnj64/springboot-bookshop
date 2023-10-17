@@ -2,19 +2,25 @@ package com.example.bookshop.services;
 
 import com.example.bookshop.models.Author;
 import com.example.bookshop.repositories.AuthorRepository;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.io.IOException;
-import java.security.Principal;
+import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AuthorService {
-    private AuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
 
     public Author createAuthor(Author author) {
         return authorRepository.save(author);
+    }
+
+    public List<Author> getAllAuthors() {
+        return authorRepository.findAll();
+    }
+
+    public Author getAuthorById(Long authorId) {
+        return authorRepository.findById(authorId).orElse(null);
     }
 }
