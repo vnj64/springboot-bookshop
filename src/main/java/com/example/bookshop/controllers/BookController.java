@@ -37,16 +37,6 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
-    @PostMapping(value = "/create")
-    public ResponseEntity<?> createBook(@RequestBody Book book) throws IOException {
-        try {
-            Book createdBook = bookService.saveBook(book);
-            return ResponseEntity.ok(createdBook);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
     @GetMapping(value = "/byAuthor/{authorId}")
     public ResponseEntity<List<Book>> getBookByAuthor(@PathVariable Long authorId) {
         Author author = authorService.getAuthorById(authorId);
@@ -56,7 +46,20 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping(value = "/sorted/byName")
+    public List<Book> getBooksByName(@RequestParam(name = "bookName", required = false) String bookName) {
+        return bookService.getBooksByName(bookName);
+    }
 
+    @PostMapping(value = "/create")
+    public ResponseEntity<?> createBook(@RequestBody Book book) throws IOException {
+        try {
+            Book createdBook = bookService.saveBook(book);
+            return ResponseEntity.ok(createdBook);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
     @PutMapping(value = "/update/book/{bookId}")
     public ResponseEntity<Book> updateBook(@PathVariable Long bookId, Book updatedBook) {
         Book updated = bookService.updateBook(bookId, updatedBook);
@@ -68,10 +71,13 @@ public class BookController {
     }
 
     @DeleteMapping(value = "/delete/{bookId}")
-    public void deleteBook(@PathVariable Long bookId) {
+    public String deleteBook(@PathVariable Long bookId) {
         Book book = bookService.findBookById(bookId);
         if (book != null) {
             bookService.deleteBook(bookId);
+            return "Книга успешно удалена!";
+        } else {
+            return "Книга не найдена :(";
         }
     }
 
