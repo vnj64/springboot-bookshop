@@ -77,3 +77,41 @@ databaseChangeLog:
             referencedTableName: authors
             referencedColumnNames: id
             constraintName: FK_books_author
+  - changeSet:
+      id: 4
+      author: vnJ
+      comment: "base data insert"
+      changes:
+        - insert:
+            tableName: authors
+            columns:
+              - column:
+                  name: first_name
+                  value: "liquibase_name"
+              - column:
+                  name: patronymic
+                  value: "liquibase_patronymic"
+              - column:
+                  name: surname
+                  value: "liquibase_surname"
+              - column:
+                  name: birth_date
+                  value: "2003-10-29"
+              - column:
+                  name: biography
+                  value: "liquibase_biography"
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: book_name
+                  value: "liquibase_bookname"
+              - column:
+                  name: seq_num
+                  value: "1"
+              - column:
+                  name: is_on_shelf
+                  value: "true"
+              - column:
+                  name: author
+                  value: "1"
