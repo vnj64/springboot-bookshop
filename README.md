@@ -20,7 +20,7 @@ At the first launch, the service independently creates the necessary objects in 
 - Hibernate
 
 ## Project setup.
-```
+```bash
 # Clone repository
 git clone git@github.com:vnj64/springboot-bookshop.git
 
