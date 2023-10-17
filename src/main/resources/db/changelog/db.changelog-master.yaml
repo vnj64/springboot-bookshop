@@ -15,7 +15,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: firstName
+                  name: first_name
                   type: varchar(50)
                   constraints:
                     nullable: false
@@ -28,7 +28,7 @@ databaseChangeLog:
                   name: surname
                   type: varchar(50)
               - column:
-                  name: birthDate
+                  name: birth_date
                   type: date
                   constraints:
                     nullable: false
@@ -50,18 +50,18 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: bookName
+                  name: book_name
                   type: varchar(30)
                   constraints:
                     nullable: false
               - column:
-                  name: seqNum
+                  name: seq_num
                   type: int
                   constraints:
                     unique: true
                     nullable: false
               - column:
-                  name: isOnShelf
+                  name: is_on_shelf
                   type: boolean
               - column:
                   name: author
@@ -73,7 +73,7 @@ databaseChangeLog:
       changes:
         - addForeignKeyConstraint:
             baseTableName: books
-            baseColumnNames: id
+            baseColumnNames: author
             referencedTableName: authors
             referencedColumnNames: id
             constraintName: FK_books_author
