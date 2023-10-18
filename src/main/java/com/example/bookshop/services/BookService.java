@@ -30,6 +30,9 @@ public class BookService {
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
+    public List<Book> getAllBooksOnShelf(Boolean isOnShelf) {
+        return bookRepository.findByIsOnShelf(isOnShelf);
+    }
 
     public Book findBookById(Long bookId) {
         return bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException("Не существует книги с ID: "+bookId));

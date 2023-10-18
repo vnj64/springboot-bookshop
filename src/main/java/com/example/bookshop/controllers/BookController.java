@@ -6,12 +6,14 @@ import com.example.bookshop.models.Book;
 import com.example.bookshop.repositories.BookRepository;
 import com.example.bookshop.services.AuthorService;
 import com.example.bookshop.services.BookService;
+import liquibase.pro.packaged.P;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,9 +34,13 @@ public class BookController {
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<List<Book>> getBooks(){
-        List<Book> books = bookService.getAllBooks();
-        return ResponseEntity.ok(books);
+    public List<Book> getBooks(
+            @RequestParam(required = false) boolean isOnShelf){
+        if (isOnShelf) {
+            return bookService.getAllBooksOnShelf(isOnShelf);
+        } else {
+            return bookService.getAllBooks();
+        }
     }
 
     @GetMapping(value = "/byAuthor/{authorId}")
