@@ -64,4 +64,10 @@ GET localhost:3030/api/authors/all
 ```http request
 GET localhost:3030/api/authors/all
 ```
+```http request
+PUT localhost:3030/api/books/update/{bookId}
+```
+```http request
+PUT localhost:3030/api/authors/update/{authorId}
+```
 **Good luck ✅!**
