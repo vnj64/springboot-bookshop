@@ -1,6 +1,7 @@
 package com.example.bookshop.controllers;
 
 import com.example.bookshop.exception.BookAlreadyExistsException;
+import com.example.bookshop.exception.BookNotFoundException;
 import com.example.bookshop.models.Author;
 import com.example.bookshop.models.Book;
 import com.example.bookshop.repositories.BookRepository;
@@ -70,12 +71,12 @@ public class BookController {
 
 
     @PutMapping(value = "/update/{bookId}")
-    public ResponseEntity<?> updateBook(@PathVariable Long bookId, Book updatedBook) {
-        Book updated = bookService.updateBook(bookId, updatedBook);
-        if (updated != null) {
-            return ResponseEntity.ok(updated);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Книги с ID: " + bookId + " не существует");
+    public ResponseEntity<?> updateBook(@PathVariable Long bookId, @RequestBody Book updatedBook) {
+        try {
+            Book updatedBookEntity = bookService.updateBook(bookId, updatedBook);
+            return ResponseEntity.ok(updatedBookEntity);
+        } catch (BookNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Автор с ID: " + bookId + " не найден.");
         }
     }
 
