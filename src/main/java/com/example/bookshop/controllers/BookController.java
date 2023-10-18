@@ -35,12 +35,16 @@ public class BookController {
 
     @GetMapping(value = "/all")
     public List<Book> getBooks(
-            @RequestParam(required = false) boolean isOnShelf){
-        if (isOnShelf) {
-            return bookService.getAllBooksOnShelf(isOnShelf);
-        } else {
-            return bookService.getAllBooks();
+            @RequestParam(name = "isOnShelf", required = false) boolean isOnShelf,
+            @RequestParam(name = "sortType", required = false) String sortType) {
+        if (Boolean.TRUE.equals(isOnShelf)) {
+            return bookService.getAllBooksOnShelf(true);
+        } else if ("seqNum".equals(sortType)) {
+            return bookService.getAllBooksBySeqNum();
+        } else if ("bookName".equals(sortType)) {
+            return bookService.getAllBooksByBookName();
         }
+        return bookService.getAllBooks();
     }
 
     @GetMapping(value = "/byAuthor/{authorId}")
@@ -51,10 +55,6 @@ public class BookController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
-    @GetMapping(value = "/sorted/byName")
-    public List<Book> getBooksByName(@RequestParam(name = "bookName", required = false) String bookName) {
-        return bookService.getBooksByName(bookName);
     }
 
     @PostMapping(value = "/create")

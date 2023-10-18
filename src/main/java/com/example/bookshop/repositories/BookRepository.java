@@ -9,9 +9,11 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByAuthor(Author author);
-    List<Book> findByBookNameContainingIgnoreCase(String bookName);
-    List<Book> findByBookNameContaining(String bookName, Sort sort);
+
     boolean existsBySeqNum(Integer seqNum);
 
     List<Book> findByIsOnShelf(Boolean isOnShelf);
+
+    List<Book> findAllByOrderBySeqNumAsc();
+    List<Book> findAllByOrderByBookName();
 }

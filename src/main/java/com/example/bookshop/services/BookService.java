@@ -30,6 +30,10 @@ public class BookService {
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
+
+    public List<Book> getAllBooksBySeqNum() {
+        return bookRepository.findAllByOrderBySeqNumAsc();
+    }
     public List<Book> getAllBooksOnShelf(Boolean isOnShelf) {
         return bookRepository.findByIsOnShelf(isOnShelf);
     }
@@ -48,6 +52,10 @@ public class BookService {
         return bookRepository.findByAuthor(author);
     }
 
+    public List<Book> getAllBooksByBookName() {
+        return bookRepository.findAllByOrderByBookName();
+    }
+
     public Book updateBook(Long bookId, Book updatedBook) {
         Optional<Book> isBookExist = bookRepository.findById(bookId);
         if (isBookExist.isPresent()) {
@@ -64,10 +72,6 @@ public class BookService {
         } else {
             return null;
         }
-    }
-
-    public List<Book> getBooksByName(String bookName) {
-        return bookRepository.findByBookNameContainingIgnoreCase(bookName);
     }
 
 }
