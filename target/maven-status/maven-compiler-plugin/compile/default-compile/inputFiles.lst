@@ -1,0 +1,7 @@
+/home/vnj/IdeaProjects/bookshop/src/main/java/com/example/bookshop/configurations/SecurityConfig.java
+/home/vnj/IdeaProjects/bookshop/src/main/java/com/example/bookshop/repositories/AuthorRepository.java
+/home/vnj/IdeaProjects/bookshop/src/main/java/com/example/bookshop/BookshopApplication.java
+/home/vnj/IdeaProjects/bookshop/src/main/java/com/example/bookshop/services/AuthorService.java
+/home/vnj/IdeaProjects/bookshop/src/main/java/com/example/bookshop/models/Book.java
+/home/vnj/IdeaProjects/bookshop/src/main/java/com/example/bookshop/models/Author.java
+/home/vnj/IdeaProjects/bookshop/src/main/java/com/example/bookshop/controllers/AuthorController.java

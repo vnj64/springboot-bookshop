@@ -1,0 +1,117 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-bookshop.yaml
+  - changeSet:
+      id: 1
+      author: vnJ
+      changes:
+        - createTable:
+            tableName: authors
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: patronymic
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: varchar(50)
+              - column:
+                  name: birth_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: biography
+                  type: varchar(200)
+  - changeSet:
+      id: 2
+      author: vnJ
+      changes:
+        - createTable:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: book_name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: seq_num
+                  type: int
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: is_on_shelf
+                  type: boolean
+              - column:
+                  name: author
+                  type: BIGINT
+  - changeSet:
+      id: 3
+      author: vnJ
+      comment: "create relationship author2book"
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: books
+            baseColumnNames: author
+            referencedTableName: authors
+            referencedColumnNames: id
+            constraintName: FK_books_author
+  - changeSet:
+      id: 4
+      author: vnJ
+      comment: "base data insert"
+      changes:
+        - insert:
+            tableName: authors
+            columns:
+              - column:
+                  name: first_name
+                  value: "liquibase_name"
+              - column:
+                  name: patronymic
+                  value: "liquibase_patronymic"
+              - column:
+                  name: surname
+                  value: "liquibase_surname"
+              - column:
+                  name: birth_date
+                  value: "2003-10-29"
+              - column:
+                  name: biography
+                  value: "liquibase_biography"
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: book_name
+                  value: "liquibase_bookname"
+              - column:
+                  name: seq_num
+                  value: "1"
+              - column:
+                  name: is_on_shelf
+                  value: "true"
+              - column:
+                  name: author
+                  value: "1"
